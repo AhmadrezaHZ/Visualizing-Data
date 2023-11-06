@@ -1,0 +1,22 @@
+import pandas as pd
+
+from bokeh.plotting import figure, output_notebook, show
+from bokeh.models import Band, ColumnDataSource, PrintfTickFormatter, DatetimeTickFormatter, Label
+from bokeh.layouts import column
+from bokeh.models.tickers import MonthsTicker
+
+output_notebook()
+
+df_kl = pd.read_csv('KLweather2018.csv', parse_dates=['Timestamp'], index_col='Timestamp')
+df_kl_prec = pd.read_csv('KLweather2018_monthlyPrecipitation.csv', parse_dates=['Timestamp'], index_col='Timestamp')
+
+df_kl.head()
+
+# create a figure
+p = figure(height=400, x_axis_type="datetime")
+
+# define the type of glyph that is rendered and its data. here: a polyline
+p.line(source=df_kl, x='Timestamp', y='temp_min')
+
+# render the chart
+show(p)
